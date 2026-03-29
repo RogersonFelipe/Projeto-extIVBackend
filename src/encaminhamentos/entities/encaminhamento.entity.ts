@@ -10,6 +10,11 @@ import {
 import { Pessoa } from '../../pessoas/entities/pessoa.entity';
 import { Empresa } from '../../empresas/entities/empresa.entity';
 
+export enum StatusEncaminhamento {
+  ATIVO = 'ativo',
+  DESLIGADO = 'desligado',
+}
+
 @Entity('encaminhamentos')
 export class Encaminhamento {
   @PrimaryGeneratedColumn()
@@ -19,28 +24,31 @@ export class Encaminhamento {
   @JoinColumn({ name: 'pessoa_id' })
   pessoa: Pessoa;
 
-  @ManyToOne(() => Empresa, {
-    eager: true,
-    onDelete: 'SET NULL',
-    nullable: true,
-  })
+  @ManyToOne(() => Empresa, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'empresa_id' })
   empresa: Empresa;
 
-  @Column({ name: 'data_encaminhamento', type: 'date', nullable: true })
-  dataEncaminhamento: string;
+  @Column({ name: 'data_admissao', type: 'date', nullable: true })
+  dataAdmissao: string;
 
-  @Column({ name: 'data_retorno', type: 'date', nullable: true })
-  dataRetorno: string;
+  @Column({ nullable: true, length: 255 })
+  funcao: string;
 
-  @Column({ default: 'pendente', length: 20 })
-  status: string;
+  @Column({ name: 'contato_rh', nullable: true, length: 255 })
+  contatoRh: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'data_provavel_desligamento', type: 'date', nullable: true })
+  dataProvavelDesligamento: string;
+
+  @Column({
+    type: 'enum',
+    enum: StatusEncaminhamento,
+    default: StatusEncaminhamento.ATIVO,
+  })
+  status: StatusEncaminhamento;
+
+  @Column({ type: 'text', nullable: true })
   observacoes: string;
-
-  @Column({ nullable: true, length: 150 })
-  cargo: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

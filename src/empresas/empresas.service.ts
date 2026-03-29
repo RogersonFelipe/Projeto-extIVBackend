@@ -18,7 +18,7 @@ export class EmpresasService {
   }
 
   findAll(): Promise<Empresa[]> {
-    return this.empresasRepo.find({ order: { nome: 'ASC' } });
+    return this.empresasRepo.find({ order: { nomeFantasia: 'ASC' } });
   }
 
   async findOne(id: number): Promise<Empresa> {

@@ -1,51 +1,30 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsInt, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 export class CreateFichaAcompanhamentoDto {
   @ApiProperty({ example: 1 })
   @IsInt()
   pessoaId: number;
 
-  @ApiPropertyOptional({ example: 1 })
+  @ApiPropertyOptional({ example: 2 })
   @IsOptional()
   @IsInt()
-  usuarioId?: number;
+  empresaId?: number;
 
-  @ApiPropertyOptional({ example: '2024-03-15' })
+  @ApiPropertyOptional({ example: '2025-03-21' })
   @IsOptional()
   @IsString()
-  dataAtendimento?: string;
+  dataVisita?: string;
 
-  @ApiPropertyOptional({ example: 'Social' })
+  @ApiPropertyOptional({ example: 'Carlos - RH' })
   @IsOptional()
   @IsString()
-  tipo?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  descricao?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  evolucao?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  plano?: string;
+  contatoRh?: string;
 
   @ApiPropertyOptional({
-    enum: ['ativo', 'encerrado', 'suspenso'],
-    default: 'ativo',
+    example: 'Usuário apresentou boa adaptação ao ambiente de trabalho.',
   })
   @IsOptional()
-  @IsIn(['ativo', 'encerrado', 'suspenso'])
-  status?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
   @IsString()
-  observacoes?: string;
+  parecerGeral?: string;
 }

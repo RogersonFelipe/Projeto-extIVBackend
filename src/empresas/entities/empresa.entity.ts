@@ -11,29 +11,26 @@ export class Empresa {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 200 })
-  nome: string;
+  @Column({ name: 'nome_fantasia', nullable: true, length: 255 })
+  nomeFantasia: string;
 
-  @Column({ nullable: true, length: 20 })
+  @Column({ name: 'razao_social', nullable: true, length: 255 })
+  razaoSocial: string;
+
+  @Column({ nullable: true, length: 18, unique: true })
   cnpj: string;
 
-  @Column({ nullable: true, length: 200 })
+  @Column({ nullable: true, length: 255 })
   endereco: string;
 
   @Column({ nullable: true, length: 20 })
   telefone: string;
 
-  @Column({ name: 'nome_contato', nullable: true, length: 150 })
-  nomeContato: string;
+  @Column({ name: 'contato_rh_nome', nullable: true, length: 255 })
+  contatoRhNome: string;
 
-  @Column({ name: 'email_contato', nullable: true, length: 150 })
-  emailContato: string;
-
-  @Column({ nullable: true })
-  observacoes: string;
-
-  @Column({ default: true })
-  ativa: boolean;
+  @Column({ name: 'contato_rh_email', nullable: true, length: 255 })
+  contatoRhEmail: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

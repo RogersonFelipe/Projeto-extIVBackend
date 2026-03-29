@@ -1,38 +1,43 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsInt, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString } from 'class-validator';
+import { StatusEncaminhamento } from '../entities/encaminhamento.entity';
 
 export class CreateEncaminhamentoDto {
   @ApiProperty({ example: 1 })
   @IsInt()
   pessoaId: number;
 
-  @ApiPropertyOptional({ example: 2 })
-  @IsOptional()
+  @ApiProperty({ example: 2 })
   @IsInt()
-  empresaId?: number;
+  empresaId: number;
 
-  @ApiPropertyOptional({ example: '2024-03-01' })
+  @ApiPropertyOptional({ example: '2025-01-15' })
   @IsOptional()
   @IsString()
-  dataEncaminhamento?: string;
-
-  @ApiPropertyOptional({ example: '2024-03-15' })
-  @IsOptional()
-  @IsString()
-  dataRetorno?: string;
-
-  @ApiPropertyOptional({
-    enum: ['pendente', 'em_andamento', 'contratado', 'recusado', 'cancelado'],
-    default: 'pendente',
-  })
-  @IsOptional()
-  @IsIn(['pendente', 'em_andamento', 'contratado', 'recusado', 'cancelado'])
-  status?: string;
+  dataAdmissao?: string;
 
   @ApiPropertyOptional({ example: 'Auxiliar Administrativo' })
   @IsOptional()
   @IsString()
-  cargo?: string;
+  funcao?: string;
+
+  @ApiPropertyOptional({ example: 'Carlos - (48) 99999-0000' })
+  @IsOptional()
+  @IsString()
+  contatoRh?: string;
+
+  @ApiPropertyOptional({ example: '2025-12-31' })
+  @IsOptional()
+  @IsString()
+  dataProvavelDesligamento?: string;
+
+  @ApiPropertyOptional({
+    enum: StatusEncaminhamento,
+    default: StatusEncaminhamento.ATIVO,
+  })
+  @IsOptional()
+  @IsEnum(StatusEncaminhamento)
+  status?: StatusEncaminhamento;
 
   @ApiPropertyOptional()
   @IsOptional()

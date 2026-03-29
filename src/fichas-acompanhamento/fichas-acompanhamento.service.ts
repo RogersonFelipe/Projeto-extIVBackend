@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FichaAcompanhamento } from './entities/ficha-acompanhamento.entity';
 import type { Pessoa } from '../pessoas/entities/pessoa.entity';
-import type { Usuario } from '../usuarios/entities/usuario.entity';
+import type { Empresa } from '../empresas/entities/empresa.entity';
 import { CreateFichaAcompanhamentoDto } from './dto/create-ficha-acompanhamento.dto';
 import { UpdateFichaAcompanhamentoDto } from './dto/update-ficha-acompanhamento.dto';
 
@@ -15,11 +15,11 @@ export class FichasAcompanhamentoService {
   ) {}
 
   create(dto: CreateFichaAcompanhamentoDto): Promise<FichaAcompanhamento> {
-    const { pessoaId, usuarioId, ...rest } = dto;
+    const { pessoaId, empresaId, ...rest } = dto;
     const ficha = this.fichasRepo.create({
       ...rest,
       pessoa: { id: pessoaId } as Pessoa,
-      usuario: usuarioId ? ({ id: usuarioId } as Usuario) : undefined,
+      empresa: empresaId ? ({ id: empresaId } as Empresa) : undefined,
     });
     return this.fichasRepo.save(ficha);
   }
@@ -31,7 +31,7 @@ export class FichasAcompanhamentoService {
   findByPessoa(pessoaId: number): Promise<FichaAcompanhamento[]> {
     return this.fichasRepo.find({
       where: { pessoa: { id: pessoaId } },
-      order: { dataAtendimento: 'DESC' },
+      order: { dataVisita: 'DESC' },
     });
   }
 
@@ -46,9 +46,9 @@ export class FichasAcompanhamentoService {
     dto: UpdateFichaAcompanhamentoDto,
   ): Promise<FichaAcompanhamento> {
     const ficha = await this.findOne(id);
-    const { pessoaId, usuarioId, ...rest } = dto;
+    const { pessoaId, empresaId, ...rest } = dto;
     if (pessoaId) ficha.pessoa = { id: pessoaId } as Pessoa;
-    if (usuarioId) ficha.usuario = { id: usuarioId } as Usuario;
+    if (empresaId) ficha.empresa = { id: empresaId } as Empresa;
     Object.assign(ficha, rest);
     return this.fichasRepo.save(ficha);
   }

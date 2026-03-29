@@ -1,10 +1,16 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class CreateEmpresaDto {
-  @ApiProperty({ example: 'Empresa ABC Ltda' })
+  @ApiPropertyOptional({ example: 'ABC Ltda' })
+  @IsOptional()
   @IsString()
-  nome: string;
+  nomeFantasia?: string;
+
+  @ApiPropertyOptional({ example: 'ABC Comércio e Serviços Ltda' })
+  @IsOptional()
+  @IsString()
+  razaoSocial?: string;
 
   @ApiPropertyOptional({ example: '12.345.678/0001-99' })
   @IsOptional()
@@ -21,23 +27,13 @@ export class CreateEmpresaDto {
   @IsString()
   telefone?: string;
 
-  @ApiPropertyOptional({ example: 'Carlos RH' })
+  @ApiPropertyOptional({ example: 'Carlos Silva' })
   @IsOptional()
   @IsString()
-  nomeContato?: string;
+  contatoRhNome?: string;
 
-  @ApiPropertyOptional({ example: 'rh@empresaabc.com' })
+  @ApiPropertyOptional({ example: 'rh@abc.com' })
   @IsOptional()
   @IsEmail()
-  emailContato?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  observacoes?: string;
-
-  @ApiPropertyOptional({ default: true })
-  @IsOptional()
-  @IsBoolean()
-  ativa?: boolean;
+  contatoRhEmail?: string;
 }

@@ -5,10 +5,9 @@ import {
   ManyToOne,
   JoinColumn,
   CreateDateColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { Pessoa } from '../../pessoas/entities/pessoa.entity';
-import { Usuario } from '../../usuarios/entities/usuario.entity';
+import { Empresa } from '../../empresas/entities/empresa.entity';
 
 @Entity('fichas_acompanhamento')
 export class FichaAcompanhamento {
@@ -19,38 +18,23 @@ export class FichaAcompanhamento {
   @JoinColumn({ name: 'pessoa_id' })
   pessoa: Pessoa;
 
-  @ManyToOne(() => Usuario, {
+  @ManyToOne(() => Empresa, {
     eager: true,
     onDelete: 'SET NULL',
     nullable: true,
   })
-  @JoinColumn({ name: 'usuario_id' })
-  usuario: Usuario;
+  @JoinColumn({ name: 'empresa_id' })
+  empresa: Empresa;
 
-  @Column({ name: 'data_atendimento', type: 'date', nullable: true })
-  dataAtendimento: string;
+  @Column({ name: 'data_visita', type: 'date', nullable: true })
+  dataVisita: string;
 
-  @Column({ nullable: true, length: 100 })
-  tipo: string;
+  @Column({ name: 'contato_rh', nullable: true, length: 255 })
+  contatoRh: string;
 
-  @Column({ nullable: true })
-  descricao: string;
-
-  @Column({ nullable: true })
-  evolucao: string;
-
-  @Column({ nullable: true })
-  plano: string;
-
-  @Column({ default: 'ativo', length: 20 })
-  status: string;
-
-  @Column({ nullable: true })
-  observacoes: string;
+  @Column({ name: 'parecer_geral', type: 'text', nullable: true })
+  parecerGeral: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 }
