@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 export enum NivelAcesso {
   ADMIN = 'admin',
@@ -22,6 +23,7 @@ export class Usuario {
   @Column({ unique: true, length: 150 })
   email: string;
 
+  @Exclude()
   @Column({ name: 'senha_hash' })
   senhaHash: string;
 

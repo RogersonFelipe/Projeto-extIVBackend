@@ -14,9 +14,13 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { FichasAcompanhamentoService } from './fichas-acompanhamento.service';
 import { CreateFichaAcompanhamentoDto } from './dto/create-ficha-acompanhamento.dto';
 import { UpdateFichaAcompanhamentoDto } from './dto/update-ficha-acompanhamento.dto';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { NivelAcesso } from '../usuarios/entities/usuario.entity';
 
 @ApiTags('Fichas de Acompanhamento')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard, RolesGuard)
 @UseGuards(JwtAuthGuard)
 @Controller('fichas-acompanhamento')
 export class FichasAcompanhamentoController {
@@ -51,6 +55,7 @@ export class FichasAcompanhamentoController {
   }
 
   @Delete(':id')
+  @Roles(NivelAcesso.ADMIN)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.fichasService.remove(id);
   }

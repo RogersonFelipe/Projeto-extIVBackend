@@ -14,10 +14,13 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { EncaminhamentosService } from './encaminhamentos.service';
 import { CreateEncaminhamentoDto } from './dto/create-encaminhamento.dto';
 import { UpdateEncaminhamentoDto } from './dto/update-encaminhamento.dto';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { NivelAcesso } from '../usuarios/entities/usuario.entity';
 
 @ApiTags('Encaminhamentos')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('encaminhamentos')
 export class EncaminhamentosController {
   constructor(
@@ -53,6 +56,7 @@ export class EncaminhamentosController {
   }
 
   @Delete(':id')
+  @Roles(NivelAcesso.ADMIN)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.encaminhamentosService.remove(id);
   }

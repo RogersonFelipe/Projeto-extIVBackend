@@ -14,9 +14,13 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AvaliacoesService } from './avaliacoes.service';
 import { CreateAvaliacaoDto } from './dto/create-avaliacao.dto';
 import { UpdateAvaliacaoDto } from './dto/update-avaliacao.dto';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { NivelAcesso } from '../usuarios/entities/usuario.entity';
 
 @ApiTags('Avaliações')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard, RolesGuard)
 @UseGuards(JwtAuthGuard)
 @Controller('avaliacoes')
 export class AvaliacoesController {
@@ -51,6 +55,7 @@ export class AvaliacoesController {
   }
 
   @Delete(':id')
+  @Roles(NivelAcesso.ADMIN)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.avaliacoesService.remove(id);
   }

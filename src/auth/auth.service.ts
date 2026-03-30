@@ -23,6 +23,7 @@ export class AuthService {
       email: usuario.email,
       nivelAcesso: usuario.nivelAcesso,
     };
+
     return {
       access_token: this.jwtService.sign(payload),
       usuario: {

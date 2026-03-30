@@ -14,10 +14,13 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { PessoasService } from './pessoas.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
+import { Roles } from '../auth/roles.decorator';
+import { RolesGuard } from '../auth/roles.guard';
+import { NivelAcesso } from '../usuarios/entities/usuario.entity';
 
 @ApiTags('Pessoas')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('pessoas')
 export class PessoasController {
   constructor(private readonly pessoasService: PessoasService) {}
@@ -43,6 +46,7 @@ export class PessoasController {
   }
 
   @Delete(':id')
+  @Roles(NivelAcesso.ADMIN)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.pessoasService.remove(id);
   }
