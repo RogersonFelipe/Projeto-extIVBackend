@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString } from 'class-validator';
+import { StatusFichaAcompanhamento } from '../entities/ficha-acompanhamento.entity';
 
 export class CreateFichaAcompanhamentoDto {
   @ApiProperty({ example: 1 })
@@ -16,10 +17,25 @@ export class CreateFichaAcompanhamentoDto {
   @IsString()
   dataVisita?: string;
 
+  @ApiPropertyOptional({ example: '2025-02-10' })
+  @IsOptional()
+  @IsString()
+  dataAdmissao?: string;
+
   @ApiPropertyOptional({ example: 'Carlos - RH' })
   @IsOptional()
   @IsString()
   contatoRh?: string;
+
+  @ApiPropertyOptional({ example: 'Telefone / WhatsApp / E-mail' })
+  @IsOptional()
+  @IsString()
+  contatoCom?: string;
+
+  @ApiPropertyOptional({ enum: StatusFichaAcompanhamento })
+  @IsOptional()
+  @IsEnum(StatusFichaAcompanhamento)
+  status?: StatusFichaAcompanhamento;
 
   @ApiPropertyOptional({
     example: 'Usuário apresentou boa adaptação ao ambiente de trabalho.',

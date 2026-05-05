@@ -26,4 +26,9 @@ export class CreateUsuarioDto {
   @IsOptional()
   @IsEnum(NivelAcesso)
   nivelAcesso?: NivelAcesso;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  fotoUrl?: string;
 }

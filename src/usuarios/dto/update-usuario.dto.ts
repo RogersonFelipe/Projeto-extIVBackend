@@ -1,5 +1,12 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
+import { NivelAcesso } from '../entities/usuario.entity';
 
 export class UpdateUsuarioDto {
   @ApiPropertyOptional({ example: 'Rogerson Ramos' })
@@ -22,4 +29,9 @@ export class UpdateUsuarioDto {
   @IsOptional()
   @IsString()
   fotoUrl?: string;
+
+  @ApiPropertyOptional({ enum: NivelAcesso })
+  @IsOptional()
+  @IsEnum(NivelAcesso)
+  nivelAcesso?: NivelAcesso;
 }

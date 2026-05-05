@@ -13,6 +13,18 @@ export enum TipoAvaliacao {
   ACOMPANHAMENTO = 'acompanhamento',
 }
 
+export enum ResultadoControle {
+  EM_ANDAMENTO = 'em-andamento',
+  APROVADO = 'aprovado',
+  REPROVADO = 'reprovado',
+}
+
+export enum StatusAvaliacao {
+  EM_ABERTO = 'em_aberto',
+  FINALIZADO = 'finalizado',
+  CANCELADO = 'cancelado',
+}
+
 @Entity('avaliacoes')
 export class Avaliacao {
   @PrimaryGeneratedColumn()
@@ -30,6 +42,40 @@ export class Avaliacao {
 
   @Column({ name: 'professor_responsavel', nullable: true, length: 255 })
   professorResponsavel: string;
+
+  @Column({ name: 'data_ingresso', type: 'date', nullable: true })
+  ingresso: string;
+
+  @Column({ name: 'data_primeira_avaliacao', type: 'date', nullable: true })
+  aval1: string;
+
+  @Column({ name: 'data_segunda_avaliacao', type: 'date', nullable: true })
+  aval2: string;
+
+  @Column({ name: 'data_primeira_entrevista_pais', type: 'date', nullable: true })
+  entrevistaPais1: string;
+
+  @Column({ name: 'data_segunda_entrevista_pais', type: 'date', nullable: true })
+  entrevistaPais2: string;
+
+  @Column({
+    name: 'resultado_controle',
+    type: 'enum',
+    enum: ResultadoControle,
+    default: ResultadoControle.EM_ANDAMENTO,
+  })
+  resultado: ResultadoControle;
+
+  @Column({ name: 'observacao_controle', type: 'text', nullable: true })
+  observacao: string;
+
+  @Column({
+    name: 'status_avaliacao',
+    type: 'enum',
+    enum: StatusAvaliacao,
+    default: StatusAvaliacao.EM_ABERTO,
+  })
+  statusAvaliacao: StatusAvaliacao;
 
   // ── Perguntas 01–46 (1=Sim, 2=Não, 3=Maioria das vezes, 4=Raras vezes) ──
   @Column({ type: 'smallint', nullable: true }) q01: number;

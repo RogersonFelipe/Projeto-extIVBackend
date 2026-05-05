@@ -29,6 +29,7 @@ export class UsuariosService {
       email: dto.email,
       senhaHash,
       nivelAcesso: dto.nivelAcesso,
+      fotoUrl: dto.fotoUrl,
     });
     return this.usuariosRepo.save(usuario);
   }
@@ -55,6 +56,7 @@ export class UsuariosService {
     if (dto.nome) usuario.nome = dto.nome;
     if (dto.email) usuario.email = dto.email;
     if (dto.fotoUrl !== undefined) usuario.fotoUrl = dto.fotoUrl;
+    if (dto.nivelAcesso) usuario.nivelAcesso = dto.nivelAcesso;
     return this.usuariosRepo.save(usuario);
   }
 

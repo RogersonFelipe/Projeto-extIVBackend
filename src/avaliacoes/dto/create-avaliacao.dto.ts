@@ -1,6 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
-import { TipoAvaliacao } from '../entities/avaliacao.entity';
+import {
+  ResultadoControle,
+  StatusAvaliacao,
+  TipoAvaliacao,
+} from '../entities/avaliacao.entity';
 
 export class CreateAvaliacaoDto {
   @ApiProperty({ example: 1 })
@@ -21,6 +25,46 @@ export class CreateAvaliacaoDto {
   @IsOptional()
   @IsString()
   professorResponsavel?: string;
+
+  @ApiPropertyOptional({ example: '2025-03-01' })
+  @IsOptional()
+  @IsString()
+  ingresso?: string;
+
+  @ApiPropertyOptional({ example: '2025-04-01' })
+  @IsOptional()
+  @IsString()
+  aval1?: string;
+
+  @ApiPropertyOptional({ example: '2025-05-01' })
+  @IsOptional()
+  @IsString()
+  aval2?: string;
+
+  @ApiPropertyOptional({ example: '2025-04-15' })
+  @IsOptional()
+  @IsString()
+  entrevistaPais1?: string;
+
+  @ApiPropertyOptional({ example: '2025-05-15' })
+  @IsOptional()
+  @IsString()
+  entrevistaPais2?: string;
+
+  @ApiPropertyOptional({ enum: ResultadoControle })
+  @IsOptional()
+  @IsEnum(ResultadoControle)
+  resultado?: ResultadoControle;
+
+  @ApiPropertyOptional({ example: 'Observações do controle interno.' })
+  @IsOptional()
+  @IsString()
+  observacao?: string;
+
+  @ApiPropertyOptional({ enum: StatusAvaliacao })
+  @IsOptional()
+  @IsEnum(StatusAvaliacao)
+  statusAvaliacao?: StatusAvaliacao;
 
   // ── Respostas q01–q46 (1=Sim, 2=Não, 3=Maioria das vezes, 4=Raras vezes) ──
   @ApiPropertyOptional({ minimum: 1, maximum: 4 })

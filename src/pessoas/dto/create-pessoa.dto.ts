@@ -6,6 +6,11 @@ export class CreatePessoaDto {
   @IsString()
   nome: string;
 
+  @ApiPropertyOptional({ example: '123.456.789-00' })
+  @IsOptional()
+  @IsString()
+  cpf?: string;
+
   @ApiPropertyOptional({ example: '2000-05-20' })
   @IsOptional()
   @IsString()

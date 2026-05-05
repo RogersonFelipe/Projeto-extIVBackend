@@ -14,6 +14,9 @@ export class Pessoa {
   @Column({ length: 150 })
   nome: string;
 
+  @Column({ nullable: true, length: 14, unique: true })
+  cpf: string;
+
   @Column({ name: 'foto_url', nullable: true })
   fotoUrl: string;
 

@@ -9,6 +9,11 @@ import {
 import { Pessoa } from '../../pessoas/entities/pessoa.entity';
 import { Empresa } from '../../empresas/entities/empresa.entity';
 
+export enum StatusFichaAcompanhamento {
+  EM_ABERTO = 'em-aberto',
+  FINALIZADA = 'finalizada',
+}
+
 @Entity('fichas_acompanhamento')
 export class FichaAcompanhamento {
   @PrimaryGeneratedColumn()
@@ -29,8 +34,21 @@ export class FichaAcompanhamento {
   @Column({ name: 'data_visita', type: 'date', nullable: true })
   dataVisita: string;
 
+  @Column({ name: 'data_admissao', type: 'date', nullable: true })
+  dataAdmissao: string;
+
   @Column({ name: 'contato_rh', nullable: true, length: 255 })
   contatoRh: string;
+
+  @Column({ name: 'contato_com', nullable: true, length: 255 })
+  contatoCom: string;
+
+  @Column({
+    type: 'enum',
+    enum: StatusFichaAcompanhamento,
+    default: StatusFichaAcompanhamento.EM_ABERTO,
+  })
+  status: StatusFichaAcompanhamento;
 
   @Column({ name: 'parecer_geral', type: 'text', nullable: true })
   parecerGeral: string;
