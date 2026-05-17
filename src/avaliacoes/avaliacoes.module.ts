@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Avaliacao } from './entities/avaliacao.entity';
+import { Encaminhamento } from '../encaminhamentos/entities/encaminhamento.entity';
 import { AvaliacoesService } from './avaliacoes.service';
 import { AvaliacoesController } from './avaliacoes.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Avaliacao])],
+  imports: [TypeOrmModule.forFeature([Avaliacao, Encaminhamento])],
   controllers: [AvaliacoesController],
   providers: [AvaliacoesService],
   exports: [AvaliacoesService],

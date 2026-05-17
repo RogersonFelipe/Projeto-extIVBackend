@@ -43,4 +43,9 @@ export class CreateEncaminhamentoDto {
   @IsOptional()
   @IsString()
   observacoes?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  motivoDesligamento?: string;
 }

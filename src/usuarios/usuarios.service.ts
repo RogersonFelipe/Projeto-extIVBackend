@@ -64,4 +64,24 @@ export class UsuariosService {
     const usuario = await this.findOne(id);
     await this.usuariosRepo.remove(usuario);
   }
+
+  async salvarTokenRecuperacao(id: number, token: string, validade: Date) {
+    await this.usuariosRepo.update(id, {
+      tokenRecuperacao: token,
+      validadeToken: validade,
+    });
+  }
+
+  async findByToken(token: string): Promise<Usuario | null> {
+    return this.usuariosRepo.findOne({ where: { tokenRecuperacao: token } });
+  }
+
+  async resetarSenha(id: number, novaSenha: string) {
+    const senhaHash = await bcrypt.hash(novaSenha, 12);
+    await this.usuariosRepo.update(id, {
+      senhaHash,
+      tokenRecuperacao: null,
+      validadeToken: null,
+    });
+  }
 }

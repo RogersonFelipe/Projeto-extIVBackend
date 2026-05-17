@@ -1,7 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Encaminhamento } from './entities/encaminhamento.entity';
+import {
+  Encaminhamento,
+  StatusEncaminhamento,
+} from './entities/encaminhamento.entity';
 import type { Pessoa } from '../pessoas/entities/pessoa.entity';
 import type { Empresa } from '../empresas/entities/empresa.entity';
 import { CreateEncaminhamentoDto } from './dto/create-encaminhamento.dto';
@@ -14,8 +21,22 @@ export class EncaminhamentosService {
     private readonly encaminhamentosRepo: Repository<Encaminhamento>,
   ) {}
 
-  create(dto: CreateEncaminhamentoDto): Promise<Encaminhamento> {
+  async create(dto: CreateEncaminhamentoDto): Promise<Encaminhamento> {
     const { pessoaId, empresaId, ...rest } = dto;
+
+    const aberto = await this.encaminhamentosRepo.findOne({
+      where: {
+        pessoa: { id: pessoaId },
+        status: StatusEncaminhamento.ATIVO,
+      },
+    });
+
+    if (aberto) {
+      throw new ConflictException(
+        'Este aluno já possui um encaminhamento em aberto.',
+      );
+    }
+
     const encaminhamento = this.encaminhamentosRepo.create({
       ...rest,
       pessoa: { id: pessoaId } as Pessoa,

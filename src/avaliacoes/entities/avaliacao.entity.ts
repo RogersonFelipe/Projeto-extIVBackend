@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { Pessoa } from '../../pessoas/entities/pessoa.entity';
+import { Encaminhamento } from '../../encaminhamentos/entities/encaminhamento.entity';
 
 export enum TipoAvaliacao {
   INICIAL = 'inicial',
@@ -33,6 +34,14 @@ export class Avaliacao {
   @ManyToOne(() => Pessoa, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'pessoa_id' })
   pessoa: Pessoa;
+
+  @ManyToOne(() => Encaminhamento, {
+    nullable: true,
+    eager: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'encaminhamento_id' })
+  encaminhamento: Encaminhamento | null;
 
   @Column({ name: 'data_avaliacao', type: 'date', nullable: true })
   dataAvaliacao: string;

@@ -30,11 +30,11 @@ export class Usuario {
   @Column({ name: 'foto_url', nullable: true })
   fotoUrl: string;
 
-  @Column({ name: 'token_recuperacao', nullable: true })
-  tokenRecuperacao: string;
+  @Column({ name: 'token_recuperacao', type: 'varchar', nullable: true })
+  tokenRecuperacao: string | null;
 
   @Column({ name: 'validade_token', type: 'timestamp', nullable: true })
-  validadeToken: Date;
+  validadeToken: Date | null;
 
   @Column({
     name: 'nivel_acesso',

@@ -50,6 +50,9 @@ export class Encaminhamento {
   @Column({ type: 'text', nullable: true })
   observacoes: string;
 
+  @Column({ name: 'motivo_desligamento', type: 'text', nullable: true })
+  motivoDesligamento: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

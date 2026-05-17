@@ -11,6 +11,11 @@ export class CreateAvaliacaoDto {
   @IsInt()
   pessoaId: number;
 
+  @ApiPropertyOptional({ example: 5 })
+  @IsOptional()
+  @IsInt()
+  encaminhamentoId?: number;
+
   @ApiPropertyOptional({ example: '2025-03-21' })
   @IsOptional()
   @IsString()
